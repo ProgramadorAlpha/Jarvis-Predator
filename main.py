@@ -1,8 +1,11 @@
 import asyncio
 import threading
 import json
+import re
 import sys
+import time
 import traceback
+import unicodedata
 from pathlib import Path
 
 import sounddevice as sd
@@ -42,16 +45,23 @@ def get_base_dir():
 BASE_DIR        = get_base_dir()
 API_CONFIG_PATH = BASE_DIR / "config" / "api_keys.json"
 PROMPT_PATH     = BASE_DIR / "core" / "prompt.txt"
+STARTUP_BRIEFING_PATH = BASE_DIR / "runtime" / "startup_briefing.json"
 LIVE_MODEL          = "models/gemini-2.5-flash-native-audio-preview-12-2025"
 CHANNELS            = 1
 SEND_SAMPLE_RATE    = 16000
 RECEIVE_SAMPLE_RATE = 24000
 CHUNK_SIZE          = 1024
+_AUDIO_TURN_END     = object()
 
+
+_api_key_cache: str | None = None
 
 def _get_api_key() -> str:
-    with open(API_CONFIG_PATH, "r", encoding="utf-8") as f:
-        return json.load(f)["gemini_api_key"]
+    global _api_key_cache
+    if _api_key_cache is None:
+        with open(API_CONFIG_PATH, "r", encoding="utf-8") as f:
+            _api_key_cache = json.load(f)["gemini_api_key"]
+    return _api_key_cache
 
 
 def _load_system_prompt() -> str:
@@ -64,7 +74,23 @@ def _load_system_prompt() -> str:
             "Never simulate or guess results — always call the appropriate tool."
         )
     
+def _consume_startup_briefing() -> str:
+    if not STARTUP_BRIEFING_PATH.exists():
+        return ""
+    try:
+        data = json.loads(STARTUP_BRIEFING_PATH.read_text(encoding="utf-8"))
+        STARTUP_BRIEFING_PATH.unlink(missing_ok=True)
+        created_at = float(data.get("created_at", 0))
+        if created_at and time.time() - created_at > 180:
+            return ""
+        return str(data.get("prompt", "")).strip()
+    except Exception as exc:
+        print(f"[JARVIS] Startup briefing ignored: {exc}")
+        return ""
+
+
 _last_memory_input = ""
+_last_memory_lock  = threading.Lock()
 
 def _update_memory_async(user_text: str, jarvis_text: str) -> None:
     global _last_memory_input
@@ -72,9 +98,12 @@ def _update_memory_async(user_text: str, jarvis_text: str) -> None:
     user_text   = (user_text   or "").strip()
     jarvis_text = (jarvis_text or "").strip()
 
-    if len(user_text) < 5 or user_text == _last_memory_input:
+    if len(user_text) < 5:
         return
-    _last_memory_input = user_text
+    with _last_memory_lock:
+        if user_text == _last_memory_input:
+            return
+        _last_memory_input = user_text
 
     try:
         api_key = _get_api_key()
@@ -83,10 +112,10 @@ def _update_memory_async(user_text: str, jarvis_text: str) -> None:
         data = extract_memory(user_text, jarvis_text, api_key)
         if data:
             update_memory(data)
-            print(f"[Memory] ✅ {list(data.keys())}")
+            print(f"[Memory] OK {list(data.keys())}")
     except Exception as e:
         if "429" not in str(e):
-            print(f"[Memory] ⚠️ {e}")
+            print(f"[Memory] WARNING {e}")
 
 TOOL_DECLARATIONS = [
     {
@@ -134,15 +163,19 @@ TOOL_DECLARATIONS = [
     },
     {
         "name": "send_message",
-        "description": "Sends a text message via WhatsApp, Telegram, or other messaging platform.",
+        "description": (
+            "Sends a verified message through WhatsApp or replies to the email "
+            "currently visible on screen. Never assume WhatsApp. If the user did "
+            "not name a platform, pass platform='auto' so screen context is used."
+        ),
         "parameters": {
             "type": "OBJECT",
             "properties": {
                 "receiver":     {"type": "STRING", "description": "Recipient contact name"},
                 "message_text": {"type": "STRING", "description": "The message to send"},
-                "platform":     {"type": "STRING", "description": "Platform: WhatsApp, Telegram, etc."}
+                "platform":     {"type": "STRING", "description": "whatsapp | email | auto. Use auto when the user did not explicitly name a platform."}
             },
-            "required": ["receiver", "message_text", "platform"]
+            "required": ["receiver", "message_text"]
         }
     },
     {
@@ -450,9 +483,9 @@ TOOL_DECLARATIONS = [
     "name": "shutdown_jarvis",
     "description": (
         "Shuts down the assistant completely. "
-        "Call this when the user expresses intent to end the conversation, "
-        "close the assistant, say goodbye, or stop Jarvis. "
-        "The user can say this in ANY language."
+        "Call this ONLY when the user gives an explicit command to close or stop Jarvis itself. "
+        "Never call it merely because the user or assistant says goodbye, thanks someone, "
+        "finishes a task, ends a topic, or uses a polite farewell."
     ),
     "parameters": {
         "type": "OBJECT",
@@ -502,9 +535,14 @@ class JarvisLive:
         self._loop          = None
         self._is_speaking   = False
         self._speaking_lock = threading.Lock()
+        self._latest_user_text = ""
+        self._pending_message: dict[str, str] | None = None
+        self._startup_briefing = _consume_startup_briefing()
+        self._handlers = self._make_handlers()
         self.ui.on_text_command = self._on_text_command
 
     def _on_text_command(self, text: str):
+        self._latest_user_text = text.strip()
         if not self._loop or not self.session:
             return
         asyncio.run_coroutine_threadsafe(
@@ -514,6 +552,17 @@ class JarvisLive:
             ),
             self._loop
         )
+
+
+    def _explicit_shutdown_requested(self) -> bool:
+        text = unicodedata.normalize("NFKD", self._latest_user_text.lower())
+        text = "".join(ch for ch in text if not unicodedata.combining(ch))
+        patterns = (
+            r"\b(cierra|cerrar|apaga|apagar|deten|detener|salir de)\s+(a\s+)?(jarvis|el asistente)\b",
+            r"\b(termina|finaliza|acaba)\s+(la\s+)?(sesion|aplicacion)\b",
+            r"\b(close|shut down|shutdown|stop|exit|quit)\s+(jarvis|the assistant)\b",
+        )
+        return any(re.search(pattern, text) for pattern in patterns)
 
     def set_speaking(self, value: bool):
         with self._speaking_lock:
@@ -575,19 +624,53 @@ class JarvisLive:
             ),
         )
 
+    def _make_handlers(self) -> dict:
+        ui, speak = self.ui, self.speak
+        return {
+            "open_app":          (lambda a: open_app(parameters=a, response=None, player=ui),
+                                  lambda a: f"Opened {a.get('app_name')}."),
+            "weather_report":    (lambda a: weather_action(parameters=a, player=ui),
+                                  "Weather delivered."),
+            "browser_control":   (lambda a: browser_control(parameters=a, player=ui),
+                                  "Done."),
+            "file_controller":   (lambda a: file_controller(parameters=a, player=ui),
+                                  "Done."),
+            "reminder":          (lambda a: reminder(parameters=a, response=None, player=ui),
+                                  "Reminder set."),
+            "youtube_video":     (lambda a: youtube_video(parameters=a, response=None, player=ui),
+                                  "Done."),
+            "computer_settings": (lambda a: computer_settings(parameters=a, response=None, player=ui),
+                                  "Done."),
+            "desktop_control":   (lambda a: desktop_control(parameters=a, player=ui),
+                                  "Done."),
+            "code_helper":       (lambda a: code_helper(parameters=a, player=ui, speak=speak),
+                                  "Done."),
+            "dev_agent":         (lambda a: dev_agent(parameters=a, player=ui, speak=speak),
+                                  "Done."),
+            "web_search":        (lambda a: web_search_action(parameters=a, player=ui),
+                                  "Done."),
+            "computer_control":  (lambda a: computer_control(parameters=a, player=ui),
+                                  "Done."),
+            "game_updater":      (lambda a: game_updater(parameters=a, player=ui, speak=speak),
+                                  "Done."),
+            "flight_finder":     (lambda a: flight_finder(parameters=a, player=ui),
+                                  "Done."),
+        }
+
     async def _execute_tool(self, fc) -> types.FunctionResponse:
         name = fc.name
         args = dict(fc.args or {})
 
-        print(f"[JARVIS] 🔧 {name}  {args}")
+        print(f"[JARVIS] TOOL {name}  {args}")
         self.ui.set_state("THINKING")
+
         if name == "save_memory":
             category = args.get("category", "notes")
             key      = args.get("key", "")
             value    = args.get("value", "")
             if key and value:
                 update_memory({category: {key: {"value": value}}})
-                print(f"[Memory] 💾 save_memory: {category}/{key} = {value}")
+                print(f"[Memory] save_memory: {category}/{key} = {value}")
             if not self.ui.muted:
                 self.ui.set_state("LISTENING")
             return types.FunctionResponse(
@@ -599,33 +682,30 @@ class JarvisLive:
         result = "Done."
 
         try:
-            if name == "open_app":
-                r = await loop.run_in_executor(None, lambda: open_app(parameters=args, response=None, player=self.ui))
-                result = r or f"Opened {args.get('app_name')}."
-
-            elif name == "weather_report":
-                r = await loop.run_in_executor(None, lambda: weather_action(parameters=args, player=self.ui))
-                result = r or "Weather delivered."
-
-            elif name == "browser_control":
-                r = await loop.run_in_executor(None, lambda: browser_control(parameters=args, player=self.ui))
-                result = r or "Done."
-
-            elif name == "file_controller":
-                r = await loop.run_in_executor(None, lambda: file_controller(parameters=args, player=self.ui))
-                result = r or "Done."
+            handler_entry = self._handlers.get(name)
+            if handler_entry:
+                fn, default = handler_entry
+                r = await loop.run_in_executor(None, lambda: fn(args))
+                result = r or (default(args) if callable(default) else default)
 
             elif name == "send_message":
-                r = await loop.run_in_executor(None, lambda: send_message(parameters=args, response=None, player=self.ui, session_memory=None))
-                result = r or f"Message sent to {args.get('receiver')}."
+                if self._pending_message:
+                    args["receiver"]     = self._pending_message["receiver"]
+                    args["message_text"] = self._pending_message["message_text"]
+                args["_user_request"] = self._latest_user_text
+                r = await loop.run_in_executor(
+                    None,
+                    lambda: send_message(parameters=args, response=None, player=self.ui, session_memory=None)
+                )
+                result = r or "Message action returned no result."
+                if result.startswith("NEEDS_PLATFORM:"):
+                    self._pending_message = {
+                        "receiver":     str(args.get("receiver", "")).strip(),
+                        "message_text": str(args.get("message_text", "")).strip(),
+                    }
+                else:
+                    self._pending_message = None
 
-            elif name == "reminder":
-                r = await loop.run_in_executor(None, lambda: reminder(parameters=args, response=None, player=self.ui))
-                result = r or "Reminder set."
-
-            elif name == "youtube_video":
-                r = await loop.run_in_executor(None, lambda: youtube_video(parameters=args, response=None, player=self.ui))
-                result = r or "Done."
             elif name == "file_processor":
                 if not args.get("file_path") and self.ui.current_file:
                     args["file_path"] = self.ui.current_file
@@ -634,7 +714,6 @@ class JarvisLive:
                     lambda: file_processor(parameters=args, player=self.ui, speak=self.speak)
                 )
                 result = r or "Done."
-
 
             elif name == "screen_process":
                 threading.Thread(
@@ -645,22 +724,6 @@ class JarvisLive:
                 ).start()
                 result = "Vision module activated. Stay completely silent — vision module will speak directly."
 
-            elif name == "computer_settings":
-                r = await loop.run_in_executor(None, lambda: computer_settings(parameters=args, response=None, player=self.ui))
-                result = r or "Done."
-
-            elif name == "desktop_control":
-                r = await loop.run_in_executor(None, lambda: desktop_control(parameters=args, player=self.ui))
-                result = r or "Done."
-
-            elif name == "code_helper":
-                r = await loop.run_in_executor(None, lambda: code_helper(parameters=args, player=self.ui, speak=self.speak))
-                result = r or "Done."
-
-            elif name == "dev_agent":
-                r = await loop.run_in_executor(None, lambda: dev_agent(parameters=args, player=self.ui, speak=self.speak))
-                result = r or "Done."
-
             elif name == "agent_task":
                 from agent.task_queue import get_queue, TaskPriority
                 priority_map = {"low": TaskPriority.LOW, "normal": TaskPriority.NORMAL, "high": TaskPriority.HIGH}
@@ -668,31 +731,22 @@ class JarvisLive:
                 task_id  = get_queue().submit(goal=args.get("goal", ""), priority=priority, speak=self.speak)
                 result   = f"Task started (ID: {task_id})."
 
-            elif name == "web_search":
-                r = await loop.run_in_executor(None, lambda: web_search_action(parameters=args, player=self.ui))
-                result = r or "Done."
-
-            elif name == "computer_control":
-                r = await loop.run_in_executor(None, lambda: computer_control(parameters=args, player=self.ui))
-                result = r or "Done."
-
-            elif name == "game_updater":
-                r = await loop.run_in_executor(None, lambda: game_updater(parameters=args, player=self.ui, speak=self.speak))
-                result = r or "Done."
-
-            elif name == "flight_finder":
-                r = await loop.run_in_executor(None, lambda: flight_finder(parameters=args, player=self.ui))
-                result = r or "Done."
             elif name == "shutdown_jarvis":
-                self.ui.write_log("SYS: Shutdown requested.")
-                self.speak("Goodbye, sir.")
-
+                if not self._explicit_shutdown_requested():
+                    result = "Shutdown blocked: no explicit user command to close Jarvis."
+                    self.ui.write_log("SYS: Accidental shutdown request blocked.")
+                    return types.FunctionResponse(
+                        id=fc.id, name=name,
+                        response={"result": result}
+                    )
+                self.ui.write_log("SYS: Explicit shutdown confirmed.")
+                self.speak("Closing Jarvis.")
                 def _shutdown():
-                    import time, sys, os
-                    time.sleep(1)
-                    os._exit(0)
-
+                    import time as _t, os as _os
+                    _t.sleep(1)
+                    _os._exit(0)
                 threading.Thread(target=_shutdown, daemon=True).start()
+
             else:
                 result = f"Unknown tool: {name}"
 
@@ -704,11 +758,17 @@ class JarvisLive:
         if not self.ui.muted:
             self.ui.set_state("LISTENING")
 
-        print(f"[JARVIS] 📤 {name} → {str(result)[:80]}")
+        print(f"[JARVIS] RESULT {name}: {str(result)[:80]}")
+
+        response_payload = {"result": result}
+        if name == "send_message":
+            response_payload["success"] = result.startswith(
+                ("Message verified as sent", "Email reply verified as sent")
+            )
 
         return types.FunctionResponse(
             id=fc.id, name=name,
-            response={"result": result}
+            response=response_payload
         )
 
     async def _send_realtime(self):
@@ -716,8 +776,20 @@ class JarvisLive:
             msg = await self.out_queue.get()
             await self.session.send_realtime_input(media=msg)
 
+    async def _deliver_startup_briefing(self):
+        if not self._startup_briefing:
+            return
+        await asyncio.sleep(2)
+        prompt = self._startup_briefing
+        self._startup_briefing = ""
+        await self.session.send_client_content(
+            turns={"parts": [{"text": prompt}]},
+            turn_complete=True,
+        )
+        print("[JARVIS] Startup briefing sent.")
+
     async def _listen_audio(self):
-        print("[JARVIS] 🎤 Mic started")
+        print("[JARVIS] Mic started")
         loop = asyncio.get_event_loop()
 
         def callback(indata, frames, time_info, status):
@@ -738,15 +810,15 @@ class JarvisLive:
                 blocksize=CHUNK_SIZE,
                 callback=callback,
             ):
-                print("[JARVIS] 🎤 Mic stream open")
+                print("[JARVIS] Mic stream open")
                 while True:
                     await asyncio.sleep(0.1)
         except Exception as e:
-            print(f"[JARVIS] ❌ Mic: {e}")
+            print(f"[JARVIS] ERROR Mic: {e}")
             raise
 
     async def _receive_audio(self):
-        print("[JARVIS] 👂 Recv started")
+        print("[JARVIS] Receive loop started")
         out_buf, in_buf = [], []
 
         try:
@@ -769,9 +841,10 @@ class JarvisLive:
                             txt = sc.input_transcription.text.strip()
                             if txt:
                                 in_buf.append(txt)
+                                self._latest_user_text = " ".join(in_buf).strip()
 
                         if sc.turn_complete:
-                            self.set_speaking(False)
+                            self.audio_in_queue.put_nowait(_AUDIO_TURN_END)
 
                             full_in = " ".join(in_buf).strip()
                             if full_in:
@@ -781,6 +854,7 @@ class JarvisLive:
                             full_out = " ".join(out_buf).strip()
                             if full_out:
                                 self.ui.write_log(f"Jarvis: {full_out}")
+                                print(f"[JARVIS] Transcript: {full_out}")
                             out_buf = []
 
                             if full_in and len(full_in) > 5:
@@ -790,10 +864,18 @@ class JarvisLive:
                                     daemon=True
                                 ).start()
 
+                        if sc.interrupted:
+                            while not self.audio_in_queue.empty():
+                                try:
+                                    self.audio_in_queue.get_nowait()
+                                except asyncio.QueueEmpty:
+                                    break
+                            self.audio_in_queue.put_nowait(_AUDIO_TURN_END)
+
                     if response.tool_call:
                         fn_responses = []
                         for fc in response.tool_call.function_calls:
-                            print(f"[JARVIS] 📞 {fc.name}")
+                            print(f"[JARVIS] CALL {fc.name}")
                             fr = await self._execute_tool(fc)
                             fn_responses.append(fr)
                         await self.session.send_tool_response(
@@ -801,12 +883,12 @@ class JarvisLive:
                         )
 
         except Exception as e:
-            print(f"[JARVIS] ❌ Recv: {e}")
+            print(f"[JARVIS] ERROR Recv: {e}")
             traceback.print_exc()
             raise
 
     async def _play_audio(self):
-        print("[JARVIS] 🔊 Play started")
+        print("[JARVIS] Playback started")
         loop = asyncio.get_event_loop()
 
         stream = sd.RawOutputStream(
@@ -819,10 +901,13 @@ class JarvisLive:
         try:
             while True:
                 chunk = await self.audio_in_queue.get()
+                if chunk is _AUDIO_TURN_END:
+                    self.set_speaking(False)
+                    continue
                 self.set_speaking(True)
                 await asyncio.to_thread(stream.write, chunk)
         except Exception as e:
-            print(f"[JARVIS] ❌ Play: {e}")
+            print(f"[JARVIS] ERROR Play: {e}")
             raise
         finally:
             self.set_speaking(False)
@@ -837,7 +922,7 @@ class JarvisLive:
 
         while True:
             try:
-                print("[JARVIS] 🔌 Connecting...")
+                print("[JARVIS] Connecting...")
                 self.ui.set_state("THINKING")
                 config = self._build_config()
 
@@ -850,7 +935,7 @@ class JarvisLive:
                     self.audio_in_queue = asyncio.Queue()
                     self.out_queue      = asyncio.Queue(maxsize=10)
 
-                    print("[JARVIS] ✅ Connected.")
+                    print("[JARVIS] Connected.")
                     self.ui.set_state("LISTENING")
                     self.ui.write_log("SYS: JARVIS online.")
 
@@ -858,14 +943,15 @@ class JarvisLive:
                     tg.create_task(self._listen_audio())
                     tg.create_task(self._receive_audio())
                     tg.create_task(self._play_audio())
+                    tg.create_task(self._deliver_startup_briefing())
                     
             except Exception as e:
-                print(f"[JARVIS] ⚠️ {e}")
+                print(f"[JARVIS] WARNING {e}")
                 traceback.print_exc()
 
             self.set_speaking(False)
             self.ui.set_state("THINKING")
-            print("[JARVIS] 🔄 Reconnecting in 3s...")
+            print("[JARVIS] Reconnecting in 3s...")
             await asyncio.sleep(3)
 
 def main():
@@ -877,7 +963,7 @@ def main():
         try:
             asyncio.run(jarvis.run())
         except KeyboardInterrupt:
-            print("\n🔴 Shutting down...")
+            print("\nShutting down...")
 
     threading.Thread(target=runner, daemon=True).start()
     ui.root.mainloop()

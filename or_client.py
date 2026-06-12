@@ -8,7 +8,6 @@ from typing import Optional
 
 import requests
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("openrouter_client")
 
 def _get_base_dir() -> Path:
@@ -82,13 +81,18 @@ _rate_limited: dict[str, float] = {}
 class OpenRouterClient:
 
     def __init__(self) -> None:
-        self.api_key  = _load_api_key()
-        self._headers = {
-            "Authorization": f"Bearer {self.api_key}",
-            "Content-Type":  "application/json",
-            "HTTP-Referer":  "https://github.com/mark-xxv",
-            "X-Title":       "MARK XXV",
-        }
+        self._api_key: str | None = None
+        self._headers: dict | None = None
+
+    def _ensure_ready(self) -> None:
+        if self._headers is None:
+            self._api_key = _load_api_key()
+            self._headers = {
+                "Authorization": f"Bearer {self._api_key}",
+                "Content-Type":  "application/json",
+                "HTTP-Referer":  "https://github.com/jarvis-mark-xxxix",
+                "X-Title":       "JARVIS MARK XXXIX",
+            }
 
     def _is_rate_limited(self, model: str) -> bool:
         ts = _rate_limited.get(model)
@@ -114,6 +118,7 @@ class OpenRouterClient:
         temperature: float = DEFAULT_TEMPERATURE,
         response_format: Optional[dict] = None,
     ) -> Optional[str]:
+        self._ensure_ready()
         payload: dict = {
             "model":       model,
             "messages":    messages,

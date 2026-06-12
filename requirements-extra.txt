@@ -1,0 +1,10 @@
+PyQt6
+pdfplumber
+PyPDF2
+python-docx
+pandas
+openpyxl
+pydub
+python-pptx
+ddgs
+vosk

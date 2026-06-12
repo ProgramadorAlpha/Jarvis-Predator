@@ -45,6 +45,17 @@ _RIGHT_W = 340
 _OS = platform.system()  # "Windows" | "Darwin" | "Linux"
 
 
+def _run_background(command: list[str], **kwargs):
+    """Run a HUD metrics probe without flashing a console window on Windows."""
+    if _OS == "Windows":
+        startupinfo = subprocess.STARTUPINFO()
+        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        startupinfo.wShowWindow = subprocess.SW_HIDE
+        kwargs["startupinfo"] = startupinfo
+        kwargs["creationflags"] = subprocess.CREATE_NO_WINDOW
+    return subprocess.run(command, **kwargs)
+
+
 class C:
     BG        = "#00060a"
     PANEL     = "#010d14"
@@ -82,6 +93,7 @@ class _SysMetrics:
         self._lock = threading.Lock()
         self._last_net = psutil.net_io_counters()
         self._last_net_t = time.time()
+        self._last_temp_t = 0.0
         self._running = True
         t = threading.Thread(target=self._loop, daemon=True)
         t.start()
@@ -112,7 +124,10 @@ class _SysMetrics:
 
         gpu = self._get_gpu()
 
-        tmp = self._get_temp()
+        tmp = self.tmp
+        if now - self._last_temp_t >= 15:
+            tmp = self._get_temp()
+            self._last_temp_t = now
 
         with self._lock:
             self.cpu = cpu
@@ -124,7 +139,7 @@ class _SysMetrics:
     def _get_gpu(self) -> float:
         # NVIDIA
         try:
-            r = subprocess.run(
+            r = _run_background(
                 ["nvidia-smi", "--query-gpu=utilization.gpu",
                  "--format=csv,noheader,nounits"],
                 capture_output=True, text=True, timeout=2
@@ -139,7 +154,7 @@ class _SysMetrics:
         # AMD (Linux)
         if _OS == "Linux":
             try:
-                r = subprocess.run(
+                r = _run_background(
                     ["rocm-smi", "--showuse", "--csv"],
                     capture_output=True, text=True, timeout=2
                 )
@@ -156,7 +171,7 @@ class _SysMetrics:
 
             # Intel GPU (Linux)
             try:
-                r = subprocess.run(
+                r = _run_background(
                     ["intel_gpu_top", "-J", "-s", "500"],
                     capture_output=True, text=True, timeout=1
                 )
@@ -171,7 +186,7 @@ class _SysMetrics:
         # macOS — powermetrics (GPU Engine)
         if _OS == "Darwin":
             try:
-                r = subprocess.run(
+                r = _run_background(
                     ["sudo", "-n", "powermetrics", "-n", "1", "-i", "500",
                      "--samplers", "gpu_power"],
                     capture_output=True, text=True, timeout=2
@@ -203,7 +218,7 @@ class _SysMetrics:
             pass
         if _OS == "Darwin":
             try:
-                r = subprocess.run(
+                r = _run_background(
                     ["osx-cpu-temp"], capture_output=True, text=True, timeout=2
                 )
                 if r.returncode == 0:
@@ -216,8 +231,8 @@ class _SysMetrics:
 
         if _OS == "Windows":
             try:
-                r = subprocess.run(
-                    ["powershell", "-Command",
+                r = _run_background(
+                    ["powershell", "-NoProfile", "-NonInteractive", "-Command",
                      "(Get-WmiObject MSAcpi_ThermalZoneTemperature -Namespace root/wmi).CurrentTemperature"],
                     capture_output=True, text=True, timeout=3
                 )
@@ -1060,7 +1075,6 @@ class MainWindow(QMainWindow):
         self._clock_tmr.start(1000)
         self._tick_clock()
 
-        # Metrik güncelleme timer'ı
         self._metric_tmr = QTimer(self)
         self._metric_tmr.timeout.connect(self._update_metrics)
         self._metric_tmr.start(2000)
@@ -1069,9 +1083,12 @@ class MainWindow(QMainWindow):
         self._log_sig.connect(self._log.append_log)
         self._state_sig.connect(self._apply_state)
 
+        self._ready_event = threading.Event()
         self._overlay: SetupOverlay | None = None
         self._ready = self._check_config()
-        if not self._ready:
+        if self._ready:
+            self._ready_event.set()
+        else:
             self._show_setup()
 
         sc_mute = QShortcut(QKeySequence("F4"), self)
@@ -1473,6 +1490,7 @@ class MainWindow(QMainWindow):
             encoding="utf-8",
         )
         self._ready = True
+        self._ready_event.set()
         if self._overlay:
             self._overlay.hide()
             self._overlay = None
@@ -1524,8 +1542,7 @@ class JarvisUI:
         self._win._log_sig.emit(text)
 
     def wait_for_api_key(self):
-        while not self._win._ready:
-            time.sleep(0.1)
+        self._win._ready_event.wait()
 
     def start_speaking(self):
         self.set_state("SPEAKING")

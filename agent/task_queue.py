@@ -1,3 +1,4 @@
+import heapq
 import threading
 import time
 import uuid
@@ -89,8 +90,7 @@ class TaskQueue:
         )
 
         with self._condition:
-            self._queue.append(task)
-            self._queue.sort(key=lambda t: (t.priority, t.created_at))
+            heapq.heappush(self._queue, task)
             self._tasks[task_id] = task
             self._condition.notify()
 
