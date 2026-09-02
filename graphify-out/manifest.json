@@ -1,0 +1,672 @@
+{
+  "actions/browser_control.py": {
+    "mtime": 1780817146.0915713,
+    "ast_hash": "dbd1323c7c1881f3e9361fd4a7f1e77c",
+    "semantic_hash": "dbd1323c7c1881f3e9361fd4a7f1e77c"
+  },
+  "actions/code_helper.py": {
+    "mtime": 1781250428.249008,
+    "ast_hash": "1e5445991aadaf1c7252b73868022119",
+    "semantic_hash": "1e5445991aadaf1c7252b73868022119"
+  },
+  "actions/computer_control.py": {
+    "mtime": 1780817146.0935853,
+    "ast_hash": "8e2cfc93385ba137b9859d749e21cbbe",
+    "semantic_hash": "8e2cfc93385ba137b9859d749e21cbbe"
+  },
+  "actions/computer_settings.py": {
+    "mtime": 1780817146.0945725,
+    "ast_hash": "b73999303921a751eeceef766ded2bd1",
+    "semantic_hash": "b73999303921a751eeceef766ded2bd1"
+  },
+  "actions/desktop.py": {
+    "mtime": 1781250380.1296172,
+    "ast_hash": "7f2b5debe3cd5c935913838282704d7e",
+    "semantic_hash": "7f2b5debe3cd5c935913838282704d7e"
+  },
+  "actions/dev_agent.py": {
+    "mtime": 1781250601.6831377,
+    "ast_hash": "46e1f5b979109867201c91ad183f18f4",
+    "semantic_hash": "46e1f5b979109867201c91ad183f18f4"
+  },
+  "actions/file_controller.py": {
+    "mtime": 1781250419.4601743,
+    "ast_hash": "97f91e2ee48a33e6d4deda28aa41b0e6",
+    "semantic_hash": "97f91e2ee48a33e6d4deda28aa41b0e6"
+  },
+  "actions/file_processor.py": {
+    "mtime": 1780817146.0970812,
+    "ast_hash": "80ee2f6290e7ac52c417759552c59745",
+    "semantic_hash": "80ee2f6290e7ac52c417759552c59745"
+  },
+  "actions/flight_finder.py": {
+    "mtime": 1780817146.098082,
+    "ast_hash": "b889ff15153d2dc0ce388a29d353d96c",
+    "semantic_hash": "b889ff15153d2dc0ce388a29d353d96c"
+  },
+  "actions/game_updater.py": {
+    "mtime": 1780817146.0990918,
+    "ast_hash": "b3adced6a83cbdc30636d9eddfbc7c40",
+    "semantic_hash": "b3adced6a83cbdc30636d9eddfbc7c40"
+  },
+  "actions/open_app.py": {
+    "mtime": 1780817146.0990918,
+    "ast_hash": "9371136f5d836f55d3dbe802c2d99dfa",
+    "semantic_hash": "9371136f5d836f55d3dbe802c2d99dfa"
+  },
+  "actions/reminder.py": {
+    "mtime": 1780817146.1000812,
+    "ast_hash": "24e10dd4789228170b4cbe6de641c14c",
+    "semantic_hash": "24e10dd4789228170b4cbe6de641c14c"
+  },
+  "actions/screen_processor.py": {
+    "mtime": 1780817146.1000812,
+    "ast_hash": "98f445daabb1602b1c55eb98a09b88ca",
+    "semantic_hash": "98f445daabb1602b1c55eb98a09b88ca"
+  },
+  "actions/send_message.py": {
+    "mtime": 1781255710.3129919,
+    "ast_hash": "b363f55a061069272b245858edd30dc2",
+    "semantic_hash": "b363f55a061069272b245858edd30dc2"
+  },
+  "actions/weather_report.py": {
+    "mtime": 1780817146.1020818,
+    "ast_hash": "9781b196700170975716fa99ffc64cd5",
+    "semantic_hash": "9781b196700170975716fa99ffc64cd5"
+  },
+  "actions/web_search.py": {
+    "mtime": 1781255680.53827,
+    "ast_hash": "c6d2ce3054e46c0ba2f0aaa21fdfa9b5",
+    "semantic_hash": "c6d2ce3054e46c0ba2f0aaa21fdfa9b5"
+  },
+  "actions/youtube_video.py": {
+    "mtime": 1780817146.1030803,
+    "ast_hash": "5ac8d2b816de7c49853fcfac6b1a83cf",
+    "semantic_hash": "5ac8d2b816de7c49853fcfac6b1a83cf"
+  },
+  "agent/error_handler.py": {
+    "mtime": 1781256636.380587,
+    "ast_hash": "810768cea6bb0fcb5ec602e3f1920261",
+    "semantic_hash": "810768cea6bb0fcb5ec602e3f1920261"
+  },
+  "agent/executor.py": {
+    "mtime": 1781256526.5303695,
+    "ast_hash": "b60d73bd50b59a0c4926ce8f0ad60e08",
+    "semantic_hash": "b60d73bd50b59a0c4926ce8f0ad60e08"
+  },
+  "agent/planner.py": {
+    "mtime": 1781256617.8975115,
+    "ast_hash": "1fc99794cda2d8733efbe7a3e619ee5a",
+    "semantic_hash": "1fc99794cda2d8733efbe7a3e619ee5a"
+  },
+  "agent/task_queue.py": {
+    "mtime": 1781256580.6369715,
+    "ast_hash": "0d3385eb94073cd7f59c8b507b7576fb",
+    "semantic_hash": "0d3385eb94073cd7f59c8b507b7576fb"
+  },
+  "config/__init__.py": {
+    "mtime": 1780817146.106082,
+    "ast_hash": "db829875f8ec204347097108964212f7",
+    "semantic_hash": "db829875f8ec204347097108964212f7"
+  },
+  "config/logging_config.py": {
+    "mtime": 1781256388.5658133,
+    "ast_hash": "cc5f48a3b518d23f4b922bbbf1736b7c",
+    "semantic_hash": "cc5f48a3b518d23f4b922bbbf1736b7c"
+  },
+  "config/secrets.py": {
+    "mtime": 1781250235.86423,
+    "ast_hash": "6ca96ea7562b1b3fd457cec340e57ce7",
+    "semantic_hash": "6ca96ea7562b1b3fd457cec340e57ce7"
+  },
+  "install_wake_startup.ps1": {
+    "mtime": 1780821980.8084736,
+    "ast_hash": "1641d8171ce62fad9cf8eb2acb4f7099",
+    "semantic_hash": "1641d8171ce62fad9cf8eb2acb4f7099"
+  },
+  "main.py": {
+    "mtime": 1781813434.0625365,
+    "ast_hash": "4a8d7004f05e2fbfd91844af21b93cef",
+    "semantic_hash": "4a8d7004f05e2fbfd91844af21b93cef"
+  },
+  "memory/__init__.py": {
+    "mtime": 1780817146.1085887,
+    "ast_hash": "24935121ac923a382fcc4509d2b8053a",
+    "semantic_hash": "24935121ac923a382fcc4509d2b8053a"
+  },
+  "memory/config_manager.py": {
+    "mtime": 1780817146.1095884,
+    "ast_hash": "a6d8f16dac76d49ed0c958fad935fdaa",
+    "semantic_hash": "a6d8f16dac76d49ed0c958fad935fdaa"
+  },
+  "memory/memory_manager.py": {
+    "mtime": 1780817146.1105886,
+    "ast_hash": "857f17998373b48ca9f742802b3ad28f",
+    "semantic_hash": "857f17998373b48ca9f742802b3ad28f"
+  },
+  "or_client.py": {
+    "mtime": 1780831293.7356122,
+    "ast_hash": "1d975583dcb19dd5e5122a00355f5b2b",
+    "semantic_hash": "1d975583dcb19dd5e5122a00355f5b2b"
+  },
+  "run.ps1": {
+    "mtime": 1780819573.7495298,
+    "ast_hash": "fd5f7ba72c3d5fbd4dc5a095689b58cf",
+    "semantic_hash": "fd5f7ba72c3d5fbd4dc5a095689b58cf"
+  },
+  "setup.py": {
+    "mtime": 1780817146.1125886,
+    "ast_hash": "c57bcc6187a31158eebe2235f068fbf7",
+    "semantic_hash": "c57bcc6187a31158eebe2235f068fbf7"
+  },
+  "tests/test_message_conversation.py": {
+    "mtime": 1780824169.2310443,
+    "ast_hash": "91aa289ec0af094a27e3ef0e655927f2",
+    "semantic_hash": "91aa289ec0af094a27e3ef0e655927f2"
+  },
+  "tests/test_security.py": {
+    "mtime": 1781257943.3746624,
+    "ast_hash": "b3349e3d953821920f542172ab6c0a91",
+    "semantic_hash": "b3349e3d953821920f542172ab6c0a91"
+  },
+  "tests/test_send_message.py": {
+    "mtime": 1780826936.9008405,
+    "ast_hash": "bc00d0f9d8befb3ac19c10d3212fa7c1",
+    "semantic_hash": "bc00d0f9d8befb3ac19c10d3212fa7c1"
+  },
+  "tests/test_wake_listener.py": {
+    "mtime": 1780823528.8039637,
+    "ast_hash": "264168afdb22cf6937d2197082a404db",
+    "semantic_hash": "264168afdb22cf6937d2197082a404db"
+  },
+  "ui.py": {
+    "mtime": 1781809880.2483606,
+    "ast_hash": "e88d4bff7f2f2490b6b29354730b1243",
+    "semantic_hash": "e88d4bff7f2f2490b6b29354730b1243"
+  },
+  "wake_listener.py": {
+    "mtime": 1781813392.178037,
+    "ast_hash": "3c6386579dc4614aae5f5b1c7c820826",
+    "semantic_hash": "3c6386579dc4614aae5f5b1c7c820826"
+  },
+  "ANTIGUO.txt": {
+    "mtime": 1785262074.7150037,
+    "ast_hash": "5d371106639ed15ac9d6a0554fbb0fe7",
+    "semantic_hash": "5d371106639ed15ac9d6a0554fbb0fe7"
+  },
+  "Aqui_tienes_los_repo.txt": {
+    "mtime": 1785262074.6870737,
+    "ast_hash": "73ab44d1b89543657f1bcb515ce3f279",
+    "semantic_hash": "73ab44d1b89543657f1bcb515ce3f279"
+  },
+  "BUILD_IT_LEGACY_90_DIAS.md": {
+    "mtime": 1784464190.4577143,
+    "ast_hash": "9aab397c4a098822821c8040c2b51788",
+    "semantic_hash": "9aab397c4a098822821c8040c2b51788"
+  },
+  "CHANGELOG.md": {
+    "mtime": 1781649993.5399394,
+    "ast_hash": "87b64aa84a7a7f6ff169721228baa5e1",
+    "semantic_hash": "87b64aa84a7a7f6ff169721228baa5e1"
+  },
+  "ESTADO_MAESTRO_PRODUCTO.md": {
+    "mtime": 1786359892.8878632,
+    "ast_hash": "b85eba8a831d94d5999e035fa974d644",
+    "semantic_hash": "b85eba8a831d94d5999e035fa974d644"
+  },
+  "INVESTIGACION_AUTOMATIZACION_REDES_HERMES.md": {
+    "mtime": 1788297415.2326152,
+    "ast_hash": "37bbb9f89a4b8e7c143664d32518feef",
+    "semantic_hash": "37bbb9f89a4b8e7c143664d32518feef"
+  },
+  "Mejoras landing smart home V3/uploads/landing-smarthome-builditnow-v2-b41f37f1.html": {
+    "mtime": 1785485787.793324,
+    "ast_hash": "10eecfac846d4e3d81dc878b074dd769",
+    "semantic_hash": "10eecfac846d4e3d81dc878b074dd769"
+  },
+  "Mejoras landing smart home V3/uploads/landing-smarthome-builditnow-v2.html": {
+    "mtime": 1785485787.8028474,
+    "ast_hash": "10eecfac846d4e3d81dc878b074dd769",
+    "semantic_hash": "10eecfac846d4e3d81dc878b074dd769"
+  },
+  "about-builditnow.html": {
+    "mtime": 1787692020.5213423,
+    "ast_hash": "896e4d732706cd2c2a6e0930ecfbbaeb",
+    "semantic_hash": "896e4d732706cd2c2a6e0930ecfbbaeb"
+  },
+  "campanha_publicitaria_blueliving.html": {
+    "mtime": 1785184881.665419,
+    "ast_hash": "47d6f6c21a67f914f883ffadc42d1f3b",
+    "semantic_hash": "47d6f6c21a67f914f883ffadc42d1f3b"
+  },
+  "conocimiento ejemplo/README.md": {
+    "mtime": 1785437523.2391949,
+    "ast_hash": "4b4ebe8d9af222613e9567310446f274",
+    "semantic_hash": "4b4ebe8d9af222613e9567310446f274"
+  },
+  "conocimiento ejemplo/_inbox/LEEME.md": {
+    "mtime": 1783841056.920803,
+    "ast_hash": "b49d1b652f0023459a2a87a5828cddf6",
+    "semantic_hash": "b49d1b652f0023459a2a87a5828cddf6"
+  },
+  "conocimiento ejemplo/_plantillas/mentor-plantilla.md": {
+    "mtime": 1785437435.1857078,
+    "ast_hash": "e8a94ee07747eb236b6025765c77cf78",
+    "semantic_hash": "e8a94ee07747eb236b6025765c77cf78"
+  },
+  "conocimiento ejemplo/mentores/_index.md": {
+    "mtime": 1785437474.0785918,
+    "ast_hash": "02519e4091c49546ffc7e70be3b10ef8",
+    "semantic_hash": "02519e4091c49546ffc7e70be3b10ef8"
+  },
+  "conocimiento ejemplo/mentores/ejemplo-nombre-apellido/frases/frases.md": {
+    "mtime": 1783841056.8753507,
+    "ast_hash": "66a95b4a8fd770669cd057b4cef4b015",
+    "semantic_hash": "66a95b4a8fd770669cd057b4cef4b015"
+  },
+  "conocimiento ejemplo/mentores/ejemplo-nombre-apellido/perfil.md": {
+    "mtime": 1785437453.093297,
+    "ast_hash": "f1f0d4939107c8b76c5a4bbf142bceef",
+    "semantic_hash": "f1f0d4939107c8b76c5a4bbf142bceef"
+  },
+  "conocimiento ejemplo/temas/LEEME.md": {
+    "mtime": 1783841056.8985493,
+    "ast_hash": "5f6af86bd07be62d84c60820611fd465",
+    "semantic_hash": "5f6af86bd07be62d84c60820611fd465"
+  },
+  "core/prompt.txt": {
+    "mtime": 1780824858.4487824,
+    "ast_hash": "166f2e66e317496293e1bfba21169415",
+    "semantic_hash": "166f2e66e317496293e1bfba21169415"
+  },
+  "cortana-command-center/index.html": {
+    "mtime": 1786352249.5068066,
+    "ast_hash": "aaab114dc431f940310fb88caa486c0e",
+    "semantic_hash": "aaab114dc431f940310fb88caa486c0e"
+  },
+  "graphify-out/memory/query_20260901_211712_evaluar_la_factibilidad_de_automatizar_publicacion.md": {
+    "mtime": 1788297432.0493302,
+    "ast_hash": "47c9d295fcc925794384df0036d01a4f",
+    "semantic_hash": "47c9d295fcc925794384df0036d01a4f"
+  },
+  "landing-piscinas-builditnow-v3.html": {
+    "mtime": 1785350058.0140684,
+    "ast_hash": "3bd7d3f295710bb535ae224a08c879f0",
+    "semantic_hash": "3bd7d3f295710bb535ae224a08c879f0"
+  },
+  "landing-piscinas-infinity-algarve.html": {
+    "mtime": 1785191247.4191053,
+    "ast_hash": "d9019a6761d872b19448e34122861b7a",
+    "semantic_hash": "d9019a6761d872b19448e34122861b7a"
+  },
+  "landing-smarthome-builditnow-v2.html": {
+    "mtime": 1785443443.926784,
+    "ast_hash": "2d59f8ac6c76d243d55803feffcf8d7d",
+    "semantic_hash": "2d59f8ac6c76d243d55803feffcf8d7d"
+  },
+  "materiales-anuncios-blueliving.html": {
+    "mtime": 1785191310.594854,
+    "ast_hash": "7044440f8d3a85bcd0d3157aa8602783",
+    "semantic_hash": "7044440f8d3a85bcd0d3157aa8602783"
+  },
+  "memory/ECOSISTEMA_PROPIETARIO_Y_CORTANA.md": {
+    "mtime": 1786352281.0174446,
+    "ast_hash": "84eef77ba4ccf13f2aeabb85d56cd937",
+    "semantic_hash": "84eef77ba4ccf13f2aeabb85d56cd937"
+  },
+  "memory/MANDATO-marca-build-it-now.md": {
+    "mtime": 1785271359.9899886,
+    "ast_hash": "36c937105fa481044fee30bf920edd2a",
+    "semantic_hash": "36c937105fa481044fee30bf920edd2a"
+  },
+  "memory/REFERENCIAS_INTERFAZ_CORTANA.md": {
+    "mtime": 1786352281.0194445,
+    "ast_hash": "8024bae8b313ae5bbd7cbf9a09025b82",
+    "semantic_hash": "8024bae8b313ae5bbd7cbf9a09025b82"
+  },
+  "proveedores_b2b.html": {
+    "mtime": 1784809461.5133624,
+    "ast_hash": "0e4ed7abfe1a7137784fa834b6fcb733",
+    "semantic_hash": "0e4ed7abfe1a7137784fa834b6fcb733"
+  },
+  "readme.md": {
+    "mtime": 1780817146.1115892,
+    "ast_hash": "4ee54f430a80d0c64ac0bb1710327c18",
+    "semantic_hash": "4ee54f430a80d0c64ac0bb1710327c18"
+  },
+  "requirements-extra.txt": {
+    "mtime": 1780821980.7997313,
+    "ast_hash": "e30959b3dc39cae6cf04509908a6ac22",
+    "semantic_hash": "e30959b3dc39cae6cf04509908a6ac22"
+  },
+  "requirements.txt": {
+    "mtime": 1781256372.5738087,
+    "ast_hash": "771b3bcd534ad029c2946c74b6868e96",
+    "semantic_hash": "771b3bcd534ad029c2946c74b6868e96"
+  },
+  "resposta_blueliving_pools.html": {
+    "mtime": 1785182073.3269808,
+    "ast_hash": "abd922e42d9283f88b5d3688b5f6a438",
+    "semantic_hash": "abd922e42d9283f88b5d3688b5f6a438"
+  },
+  "scripts_contacto_proveedores.html": {
+    "mtime": 1784883346.6176562,
+    "ast_hash": "265607304c186282cb280a7b8ebbdb94",
+    "semantic_hash": "265607304c186282cb280a7b8ebbdb94"
+  },
+  "tmp-about.html": {
+    "mtime": 1787689435.9143937,
+    "ast_hash": "9a0b738849e5da4264afa8d965e7b32b",
+    "semantic_hash": "9a0b738849e5da4264afa8d965e7b32b"
+  },
+  "presupuestos-referencia/presupuesto-ANTIGUO-cozinha.pdf": {
+    "mtime": 1785262809.4289877,
+    "ast_hash": "71a3ec6b7613e703e4df116322aa8c10",
+    "semantic_hash": "71a3ec6b7613e703e4df116322aa8c10"
+  },
+  "presupuestos-referencia/presupuesto-NUEVO-2026.pdf": {
+    "mtime": 1785262809.2931938,
+    "ast_hash": "2ac30c7bb9a2245f242613fece36ac9e",
+    "semantic_hash": "2ac30c7bb9a2245f242613fece36ac9e"
+  },
+  "Mejoras landing smart home V3/uploads/final-villa.jpg": {
+    "mtime": 1785485787.762865,
+    "ast_hash": "4eb9d4f5980dbd3d4c5fa1055ede727f",
+    "semantic_hash": "4eb9d4f5980dbd3d4c5fa1055ede727f"
+  },
+  "Mejoras landing smart home V3/uploads/hero-bedroom.jpg": {
+    "mtime": 1785485787.7837622,
+    "ast_hash": "b228b9598b54154d6ce1a7798fabc8f0",
+    "semantic_hash": "b228b9598b54154d6ce1a7798fabc8f0"
+  },
+  "Mejoras landing smart home V3/uploads/mood-room.jpg": {
+    "mtime": 1785485787.8153818,
+    "ast_hash": "4ddd62643ff93d3da1429228db867516",
+    "semantic_hash": "4ddd62643ff93d3da1429228db867516"
+  },
+  "Mejoras landing smart home V3/uploads/pasted-1785484742757-0.png": {
+    "mtime": 1785485787.8437002,
+    "ast_hash": "e61d8b8648cc8d950d1f56dae2e269c2",
+    "semantic_hash": "e61d8b8648cc8d950d1f56dae2e269c2"
+  },
+  "Mejoras landing smart home V3/uploads/pasted-1785484752739-0.png": {
+    "mtime": 1785485787.863362,
+    "ast_hash": "82316ed5e14c9ee38b0770c58a1d9576",
+    "semantic_hash": "82316ed5e14c9ee38b0770c58a1d9576"
+  },
+  "Mejoras landing smart home V3/uploads/scn-arrival.jpg": {
+    "mtime": 1785485787.8764224,
+    "ast_hash": "ffa3d807937a4ea407481a238f67c92d",
+    "semantic_hash": "ffa3d807937a4ea407481a238f67c92d"
+  },
+  "Mejoras landing smart home V3/uploads/scn-away.jpg": {
+    "mtime": 1785485787.8879402,
+    "ast_hash": "350705fb71d1ac3347fec960b3e95f30",
+    "semantic_hash": "350705fb71d1ac3347fec960b3e95f30"
+  },
+  "Mejoras landing smart home V3/uploads/scn-cinema.jpg": {
+    "mtime": 1785485787.8984697,
+    "ast_hash": "c29379cc72b755471249996eb100add3",
+    "semantic_hash": "c29379cc72b755471249996eb100add3"
+  },
+  "Mejoras landing smart home V3/uploads/scn-london.jpg": {
+    "mtime": 1785485787.9116354,
+    "ast_hash": "51b49ae4853383989003ffc628d380e6",
+    "semantic_hash": "51b49ae4853383989003ffc628d380e6"
+  },
+  "Mejoras landing smart home V3/uploads/sys-cinema.jpg": {
+    "mtime": 1785485787.926711,
+    "ast_hash": "2ad27a764877ca0100393ea4b59bb9e3",
+    "semantic_hash": "2ad27a764877ca0100393ea4b59bb9e3"
+  },
+  "Mejoras landing smart home V3/uploads/sys-climate.jpg": {
+    "mtime": 1785485787.9394455,
+    "ast_hash": "f759777fd3e578f198bc4d7324b5228f",
+    "semantic_hash": "f759777fd3e578f198bc4d7324b5228f"
+  },
+  "Mejoras landing smart home V3/uploads/sys-energy.jpg": {
+    "mtime": 1785485787.951833,
+    "ast_hash": "160f6cc154910a29f81af8e394c79495",
+    "semantic_hash": "160f6cc154910a29f81af8e394c79495"
+  },
+  "Mejoras landing smart home V3/uploads/sys-security.jpg": {
+    "mtime": 1785485787.9619167,
+    "ast_hash": "54e02ffc1047d9a54ede2a0a93986efe",
+    "semantic_hash": "54e02ffc1047d9a54ede2a0a93986efe"
+  },
+  "Mejoras landing smart home V3/uploads/sys-shading.jpg": {
+    "mtime": 1785485787.9734864,
+    "ast_hash": "08fe6851909cbed32eaed27a7960d2eb",
+    "semantic_hash": "08fe6851909cbed32eaed27a7960d2eb"
+  },
+  "Mejoras landing smart home V3/uploads/sys-surveillance.jpg": {
+    "mtime": 1785485787.986162,
+    "ast_hash": "7d276260da7fc81c31e4b3fe8eca81d8",
+    "semantic_hash": "7d276260da7fc81c31e4b3fe8eca81d8"
+  },
+  "assets-about/logo.png": {
+    "mtime": 1787689555.5796125,
+    "ast_hash": "fa5ab87ee4c8e31e1f1cb0ee65f44ca8",
+    "semantic_hash": "fa5ab87ee4c8e31e1f1cb0ee65f44ca8"
+  },
+  "assets-about/team-obra.jpg": {
+    "mtime": 1787689630.983786,
+    "ast_hash": "f04d9a5019735c49d1384d8f3cdaa0de",
+    "semantic_hash": "f04d9a5019735c49d1384d8f3cdaa0de"
+  },
+  "assets-piscinas/blueprint-villa.jpg": {
+    "mtime": 1785264882.01666,
+    "ast_hash": "67c111e004704db7e595f590c5f3c156",
+    "semantic_hash": "67c111e004704db7e595f590c5f3c156"
+  },
+  "assets-piscinas/col-01-infinity.jpg": {
+    "mtime": 1785313033.9282238,
+    "ast_hash": "a71ee1e456ac593345365fd61332d57a",
+    "semantic_hash": "a71ee1e456ac593345365fd61332d57a"
+  },
+  "assets-piscinas/col-04-acrylic.jpg": {
+    "mtime": 1785313033.9595563,
+    "ast_hash": "ee85d2e2412566470133cc150a8b2936",
+    "semantic_hash": "ee85d2e2412566470133cc150a8b2936"
+  },
+  "assets-piscinas/col-05-plunge.jpg": {
+    "mtime": 1785313033.9791296,
+    "ast_hash": "b8257dd77112d9fe50911d5d12fa3f81",
+    "semantic_hash": "b8257dd77112d9fe50911d5d12fa3f81"
+  },
+  "assets-piscinas/col-06-wellness.jpg": {
+    "mtime": 1785313033.998288,
+    "ast_hash": "da4ebbdc75cd87c25446a5d65a14fb2d",
+    "semantic_hash": "da4ebbdc75cd87c25446a5d65a14fb2d"
+  },
+  "assets-piscinas/infinity-sea.jpg": {
+    "mtime": 1785263849.3170722,
+    "ast_hash": "86b9bd3f7e948ab89e93f0a7f19b65ad",
+    "semantic_hash": "86b9bd3f7e948ab89e93f0a7f19b65ad"
+  },
+  "assets-piscinas/modern-villa.jpg": {
+    "mtime": 1785263848.6288917,
+    "ast_hash": "39dda9d8abefd8258a5fd09a46fb23c7",
+    "semantic_hash": "39dda9d8abefd8258a5fd09a46fb23c7"
+  },
+  "assets-piscinas/pool-deck.jpg": {
+    "mtime": 1785263848.7739038,
+    "ast_hash": "3ab86f6fa935c4b75c2f8f3b4644646c",
+    "semantic_hash": "3ab86f6fa935c4b75c2f8f3b4644646c"
+  },
+  "assets-piscinas/resort-pool.jpg": {
+    "mtime": 1785263849.2654321,
+    "ast_hash": "39ec58746ab753715067ebb1e97d13f6",
+    "semantic_hash": "39ec58746ab753715067ebb1e97d13f6"
+  },
+  "assets-piscinas/spa-water.jpg": {
+    "mtime": 1785263849.2427256,
+    "ast_hash": "0864423a1ad85f6e38c8a1d277d03eb3",
+    "semantic_hash": "0864423a1ad85f6e38c8a1d277d03eb3"
+  },
+  "assets-piscinas/villa-pool.jpg": {
+    "mtime": 1785263848.441033,
+    "ast_hash": "e5ec081e084eae6619271d46ea4bc7db",
+    "semantic_hash": "e5ec081e084eae6619271d46ea4bc7db"
+  },
+  "assets-piscinas/wel-combi-a.jpg": {
+    "mtime": 1785319790.5551438,
+    "ast_hash": "a887e66c7dd613313862105d8b85654c",
+    "semantic_hash": "a887e66c7dd613313862105d8b85654c"
+  },
+  "assets-piscinas/wel-combi-b.jpg": {
+    "mtime": 1785319790.5731423,
+    "ast_hash": "f36bdd7bede95cb6e3b8639fd5a4ab87",
+    "semantic_hash": "f36bdd7bede95cb6e3b8639fd5a4ab87"
+  },
+  "assets-piscinas/wel-combi-c.jpg": {
+    "mtime": 1785319790.5891433,
+    "ast_hash": "a094298967034af522acbc8ecde023ee",
+    "semantic_hash": "a094298967034af522acbc8ecde023ee"
+  },
+  "assets-piscinas/wel-hammam-a.jpg": {
+    "mtime": 1785319790.4132686,
+    "ast_hash": "55c8cc52940e07f1a6fc42ff5e60024f",
+    "semantic_hash": "55c8cc52940e07f1a6fc42ff5e60024f"
+  },
+  "assets-piscinas/wel-hammam-b.jpg": {
+    "mtime": 1785319790.4292624,
+    "ast_hash": "a887e66c7dd613313862105d8b85654c",
+    "semantic_hash": "a887e66c7dd613313862105d8b85654c"
+  },
+  "assets-piscinas/wel-hammam-c.jpg": {
+    "mtime": 1785319790.4491458,
+    "ast_hash": "f36bdd7bede95cb6e3b8639fd5a4ab87",
+    "semantic_hash": "f36bdd7bede95cb6e3b8639fd5a4ab87"
+  },
+  "assets-piscinas/wel-sauna-a.jpg": {
+    "mtime": 1785319790.3434076,
+    "ast_hash": "8b784a9e117040401eb18f3bbc1d1583",
+    "semantic_hash": "8b784a9e117040401eb18f3bbc1d1583"
+  },
+  "assets-piscinas/wel-sauna-b.jpg": {
+    "mtime": 1785319790.3712628,
+    "ast_hash": "5070d1c8252cd4a3f1573ba3a0979f1f",
+    "semantic_hash": "5070d1c8252cd4a3f1573ba3a0979f1f"
+  },
+  "assets-piscinas/wel-sauna-c.jpg": {
+    "mtime": 1785319790.3942041,
+    "ast_hash": "155e6fee00fa687b4a1356fbf07e78ff",
+    "semantic_hash": "155e6fee00fa687b4a1356fbf07e78ff"
+  },
+  "assets-piscinas/wel-spa-a.jpg": {
+    "mtime": 1785319790.469267,
+    "ast_hash": "ec3658314612005f01d7ac028453c67c",
+    "semantic_hash": "ec3658314612005f01d7ac028453c67c"
+  },
+  "assets-piscinas/wel-spa-b.jpg": {
+    "mtime": 1785319790.4851668,
+    "ast_hash": "6883d9fc1a3c8dda3d9c7c567db95df1",
+    "semantic_hash": "6883d9fc1a3c8dda3d9c7c567db95df1"
+  },
+  "assets-piscinas/wel-spa-c.jpg": {
+    "mtime": 1785319790.5021403,
+    "ast_hash": "76ddf2cc80d47f1fd7eed619cf15e33c",
+    "semantic_hash": "76ddf2cc80d47f1fd7eed619cf15e33c"
+  },
+  "assets-piscinas/wel-spa-d.jpg": {
+    "mtime": 1785319790.5191457,
+    "ast_hash": "c79826377bed8bae79906e0d733ecfa4",
+    "semantic_hash": "c79826377bed8bae79906e0d733ecfa4"
+  },
+  "assets-piscinas/wel-spa-e.jpg": {
+    "mtime": 1785319790.537249,
+    "ast_hash": "1ddd98543d63abe54cdca2ea726c8414",
+    "semantic_hash": "1ddd98543d63abe54cdca2ea726c8414"
+  },
+  "assets-smarthome/final-villa.jpg": {
+    "mtime": 1785437366.270604,
+    "ast_hash": "4eb9d4f5980dbd3d4c5fa1055ede727f",
+    "semantic_hash": "4eb9d4f5980dbd3d4c5fa1055ede727f"
+  },
+  "assets-smarthome/hero-bedroom.jpg": {
+    "mtime": 1785435381.188002,
+    "ast_hash": "b228b9598b54154d6ce1a7798fabc8f0",
+    "semantic_hash": "b228b9598b54154d6ce1a7798fabc8f0"
+  },
+  "assets-smarthome/mood-room.jpg": {
+    "mtime": 1785409341.3729007,
+    "ast_hash": "4ddd62643ff93d3da1429228db867516",
+    "semantic_hash": "4ddd62643ff93d3da1429228db867516"
+  },
+  "assets-smarthome/scn-arrival.jpg": {
+    "mtime": 1785435381.2731116,
+    "ast_hash": "ffa3d807937a4ea407481a238f67c92d",
+    "semantic_hash": "ffa3d807937a4ea407481a238f67c92d"
+  },
+  "assets-smarthome/scn-away.jpg": {
+    "mtime": 1785409341.22306,
+    "ast_hash": "350705fb71d1ac3347fec960b3e95f30",
+    "semantic_hash": "350705fb71d1ac3347fec960b3e95f30"
+  },
+  "assets-smarthome/scn-cinema.jpg": {
+    "mtime": 1785443407.8607635,
+    "ast_hash": "c29379cc72b755471249996eb100add3",
+    "semantic_hash": "c29379cc72b755471249996eb100add3"
+  },
+  "assets-smarthome/scn-london.jpg": {
+    "mtime": 1785409340.2355251,
+    "ast_hash": "51b49ae4853383989003ffc628d380e6",
+    "semantic_hash": "51b49ae4853383989003ffc628d380e6"
+  },
+  "assets-smarthome/sys-cinema.jpg": {
+    "mtime": 1785435381.2571118,
+    "ast_hash": "2ad27a764877ca0100393ea4b59bb9e3",
+    "semantic_hash": "2ad27a764877ca0100393ea4b59bb9e3"
+  },
+  "assets-smarthome/sys-climate.jpg": {
+    "mtime": 1785409337.9520323,
+    "ast_hash": "f759777fd3e578f198bc4d7324b5228f",
+    "semantic_hash": "f759777fd3e578f198bc4d7324b5228f"
+  },
+  "assets-smarthome/sys-energy.jpg": {
+    "mtime": 1785435381.2411296,
+    "ast_hash": "160f6cc154910a29f81af8e394c79495",
+    "semantic_hash": "160f6cc154910a29f81af8e394c79495"
+  },
+  "assets-smarthome/sys-security.jpg": {
+    "mtime": 1785409654.609904,
+    "ast_hash": "54e02ffc1047d9a54ede2a0a93986efe",
+    "semantic_hash": "54e02ffc1047d9a54ede2a0a93986efe"
+  },
+  "assets-smarthome/sys-shading.jpg": {
+    "mtime": 1785435381.2250197,
+    "ast_hash": "08fe6851909cbed32eaed27a7960d2eb",
+    "semantic_hash": "08fe6851909cbed32eaed27a7960d2eb"
+  },
+  "assets-smarthome/sys-surveillance.jpg": {
+    "mtime": 1785437366.1915002,
+    "ast_hash": "7d276260da7fc81c31e4b3fe8eca81d8",
+    "semantic_hash": "7d276260da7fc81c31e4b3fe8eca81d8"
+  },
+  "cortana-command-center/assets/cortana-avatar-original.png": {
+    "mtime": 1786349782.645056,
+    "ast_hash": "f3ca2c3c8cfca08da1d5f306a4796303",
+    "semantic_hash": "f3ca2c3c8cfca08da1d5f306a4796303"
+  },
+  "wellness_saunas_banhos/01_Sauna_A_ResZE.jpg": {
+    "mtime": 1785318581.9482913,
+    "ast_hash": "8b784a9e117040401eb18f3bbc1d1583",
+    "semantic_hash": "8b784a9e117040401eb18f3bbc1d1583"
+  },
+  "wellness_saunas_banhos/02_BanhoTurco_A_Al6wX.jpg": {
+    "mtime": 1785318581.9682941,
+    "ast_hash": "55c8cc52940e07f1a6fc42ff5e60024f",
+    "semantic_hash": "55c8cc52940e07f1a6fc42ff5e60024f"
+  },
+  "wellness_saunas_banhos/03_Spa_F_bZFyZ.jpg": {
+    "mtime": 1785318891.5742838,
+    "ast_hash": "1ddd98543d63abe54cdca2ea726c8414",
+    "semantic_hash": "1ddd98543d63abe54cdca2ea726c8414"
+  },
+  "wellness_saunas_banhos/04_Combinado_B_QNfTm.jpg": {
+    "mtime": 1785318891.585284,
+    "ast_hash": "f36bdd7bede95cb6e3b8639fd5a4ab87",
+    "semantic_hash": "f36bdd7bede95cb6e3b8639fd5a4ab87"
+  }
+}

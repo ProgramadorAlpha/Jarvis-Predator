@@ -1,0 +1,27 @@
+name: Validate knowledge graph
+
+on:
+  pull_request:
+    paths:
+      - 'graphify-out/**'
+      - 'docs/PROJECT_CONTEXT.md'
+      - 'AGENTS.md'
+      - 'scripts/validate_graph.py'
+  push:
+    branches: [main]
+    paths:
+      - 'graphify-out/**'
+      - 'docs/PROJECT_CONTEXT.md'
+      - 'AGENTS.md'
+      - 'scripts/validate_graph.py'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Validate shared Graphify snapshot
+        run: python scripts/validate_graph.py
