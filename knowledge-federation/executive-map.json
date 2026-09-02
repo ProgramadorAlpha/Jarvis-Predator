@@ -1,0 +1,64 @@
+{
+  "generated_at": "2026-09-02T00:17:10.481240+00:00",
+  "schema_version": 1,
+  "nodes": [
+    {
+      "id": "jarvis_predator",
+      "label": "Jarvis Predator",
+      "kind": "local_control"
+    },
+    {
+      "id": "klyp_agency",
+      "label": "Klyp Agencia",
+      "kind": "marketing_operation"
+    },
+    {
+      "id": "mentor_rag",
+      "label": "Mentor RAG",
+      "kind": "evidence_retrieval"
+    },
+    {
+      "id": "cortana_hermes",
+      "label": "Cortana / Hermes",
+      "kind": "vps_execution"
+    },
+    {
+      "id": "social_execution",
+      "label": "Social marketing execution",
+      "kind": "planned_workflow"
+    }
+  ],
+  "links": [
+    {
+      "source": "jarvis_predator",
+      "target": "cortana_hermes",
+      "relation": "coordinates",
+      "state": "active"
+    },
+    {
+      "source": "klyp_agency",
+      "target": "mentor_rag",
+      "relation": "uses_evidence_from",
+      "state": "active"
+    },
+    {
+      "source": "klyp_agency",
+      "target": "social_execution",
+      "relation": "defines_strategy_for",
+      "state": "planned"
+    },
+    {
+      "source": "cortana_hermes",
+      "target": "social_execution",
+      "relation": "will_execute",
+      "state": "planned"
+    },
+    {
+      "source": "jarvis_predator",
+      "target": "klyp_agency",
+      "relation": "provides_local_observability_for",
+      "state": "planned"
+    }
+  ],
+  "interpretation": "Active describes currently available knowledge/control surfaces. Planned requires implementation evidence before it can be treated as production capability."
+}

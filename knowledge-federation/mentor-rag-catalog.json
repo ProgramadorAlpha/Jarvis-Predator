@@ -1,0 +1,170 @@
+{
+  "generated_at": "2026-09-02T00:17:10.481240+00:00",
+  "source_root_env": "MENTOR_RAG_ROOT",
+  "query_contract": {
+    "tool": "herramientas/consultar.py",
+    "requires_citation": [
+      "mentor",
+      "title",
+      "url",
+      "time_or_page"
+    ],
+    "metadata_is_not_evidence": true
+  },
+  "coverage": {
+    "mentor_folders": 14,
+    "metadata_records": 365,
+    "transcripts": 355,
+    "books": 10,
+    "sources": {
+      "libro": 10,
+      "video": 355
+    },
+    "languages": {
+      "en": 210,
+      "es": 145
+    },
+    "vector_chunks": 9276,
+    "manual_only_records": 1
+  },
+  "mentors": [
+    {
+      "mentor": "alex-hormozi",
+      "videos": 0,
+      "books": 1,
+      "languages": {},
+      "channels": []
+    },
+    {
+      "mentor": "alvaro-jarque",
+      "videos": 1,
+      "books": 0,
+      "languages": {
+        "es": 1
+      },
+      "channels": [
+        "InvernovAH — Álvaro H. Jarque"
+      ]
+    },
+    {
+      "mentor": "benjamin-cordero",
+      "videos": 22,
+      "books": 0,
+      "languages": {
+        "es": 22
+      },
+      "channels": [
+        "Benjamín Cordero"
+      ]
+    },
+    {
+      "mentor": "biblioteca",
+      "videos": 0,
+      "books": 2,
+      "languages": {},
+      "channels": []
+    },
+    {
+      "mentor": "bob-proctor",
+      "videos": 0,
+      "books": 1,
+      "languages": {},
+      "channels": []
+    },
+    {
+      "mentor": "grant-cardone",
+      "videos": 0,
+      "books": 1,
+      "languages": {},
+      "channels": []
+    },
+    {
+      "mentor": "ia-webs",
+      "videos": 14,
+      "books": 0,
+      "languages": {
+        "en": 2,
+        "es": 12
+      },
+      "channels": [
+        "Kyle Skelly",
+        "Desconocido (pendiente URL)",
+        "Sanji Nai-Chien"
+      ]
+    },
+    {
+      "mentor": "jurgen-klaric",
+      "videos": 0,
+      "books": 1,
+      "languages": {},
+      "channels": []
+    },
+    {
+      "mentor": "liam-ottley",
+      "videos": 208,
+      "books": 0,
+      "languages": {
+        "en": 208
+      },
+      "channels": [
+        "Liam Ottley"
+      ]
+    },
+    {
+      "mentor": "noah-kagan",
+      "videos": 0,
+      "books": 1,
+      "languages": {},
+      "channels": []
+    },
+    {
+      "mentor": "philip-kotler",
+      "videos": 0,
+      "books": 2,
+      "languages": {},
+      "channels": []
+    },
+    {
+      "mentor": "romuald-fons",
+      "videos": 62,
+      "books": 0,
+      "languages": {
+        "es": 62
+      },
+      "channels": [
+        "Romuald Fons"
+      ]
+    },
+    {
+      "mentor": "steve-allen",
+      "videos": 0,
+      "books": 1,
+      "languages": {},
+      "channels": []
+    },
+    {
+      "mentor": "victor-heras",
+      "videos": 48,
+      "books": 0,
+      "languages": {
+        "es": 48
+      },
+      "channels": [
+        "Víctor Heras Media",
+        "Emprendedor Eficaz"
+      ]
+    }
+  ],
+  "routing": {
+    "use_for": [
+      "evidence retrieval",
+      "strategy references",
+      "playbook research"
+    ],
+    "do_not_use_for": [
+      "uncited claims",
+      "raw transcript syncing",
+      "production secrets"
+    ]
+  }
+}

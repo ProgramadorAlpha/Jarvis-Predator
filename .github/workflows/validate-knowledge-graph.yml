@@ -5,15 +5,21 @@ on:
     paths:
       - 'graphify-out/**'
       - 'docs/PROJECT_CONTEXT.md'
+      - 'docs/KNOWLEDGE_FEDERATION.md'
       - 'AGENTS.md'
       - 'scripts/validate_graph.py'
+      - 'scripts/validate_knowledge_federation.py'
+      - 'knowledge-federation/**'
   push:
     branches: [main]
     paths:
       - 'graphify-out/**'
       - 'docs/PROJECT_CONTEXT.md'
+      - 'docs/KNOWLEDGE_FEDERATION.md'
       - 'AGENTS.md'
       - 'scripts/validate_graph.py'
+      - 'scripts/validate_knowledge_federation.py'
+      - 'knowledge-federation/**'
 
 jobs:
   validate:
@@ -25,3 +31,5 @@ jobs:
           python-version: '3.13'
       - name: Validate shared Graphify snapshot
         run: python scripts/validate_graph.py
+      - name: Validate knowledge federation
+        run: python scripts/validate_knowledge_federation.py
