@@ -7,6 +7,19 @@ A real-time voice AI that can hear, see, understand, and control your computer �
 
 ---
 
+## 🧭 Shared knowledge graph (Jarvis Predator)
+
+This workspace keeps a portable Graphify snapshot for architecture navigation and collaborator onboarding.
+
+- Start with [`docs/PROJECT_CONTEXT.md`](docs/PROJECT_CONTEXT.md).
+- Open [`graphify-out/graph.html`](graphify-out/graph.html) for the interactive map.
+- Review [`graphify-out/GRAPH_REPORT.md`](graphify-out/GRAPH_REPORT.md) for provenance and coverage.
+- Run `powershell -ExecutionPolicy Bypass -File scripts/bootstrap_graphify.ps1` after cloning to install the local agent instructions and Git hooks.
+
+The snapshot is an index, not a source of truth: agents should query it first and then inspect the cited source files. Secrets and Graphify caches are intentionally excluded from Git.
+
+---
+
 ## ✨ Overview
 
 MARK XXXIX-OR represents the pinnacle of the Jarvis series, evolving into a more flexible and robust system. It bridges the gap between the operating system and human intent. Through natural dialogue, Mark 39 analyzes your screen, processes uploaded documents, and executes complex workflows with a brand-new, adaptive interface.
